@@ -13,13 +13,13 @@ import javax.validation.constraints.NotBlank;
 public class tareas {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     @NotBlank(message = "El título de la tarea es obligatorio")
     private String titulo;
     private String descripcion;
     private String estado; // 'pendiente', 'activo', 'completado'
 
-    public tareas( String id,String titulo, String descripcion, String estado) {
+    public tareas( Long id,String titulo, String descripcion, String estado) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.estado = estado;
@@ -30,7 +30,7 @@ public class tareas {
 
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

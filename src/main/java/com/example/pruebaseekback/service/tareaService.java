@@ -20,11 +20,10 @@ public class tareaService {
         return tareaRepository.save(tareas);
     }
 
-    public tareas updateTarea(String id, tareas  nuevaTarea) {
-        Long number = Long.parseLong(id);
+    public tareas updateTarea(Long id, tareas  nuevaTarea) {
         Optional<tareas> tareaExistente = tareaRepository.findById(id);
         if (!tareaExistente.isPresent()) {
-            throw new noEncuentraExcepcion(number);
+            throw new noEncuentraExcepcion(id);
         }
         tareas tarea = tareaExistente.get();
         tarea.setTitulo(nuevaTarea.getTitulo());
@@ -33,17 +32,16 @@ public class tareaService {
         return tareaRepository.save(tarea);
     }
 
-    public tareas getXId(String id) {
-        Long number = Long.parseLong(id);
+    public tareas getXId(Long id) {
         Optional<tareas> tareas = tareaRepository.findById(id);
         if (!tareas.isPresent()) {
-            throw new noEncuentraExcepcion(number);
+            throw new noEncuentraExcepcion(id);
         }
 
         return tareas.get();
     }
 
-    public boolean deleteTarea(String id) {
+    public boolean deleteTarea(Long id) {
         tareas task = getXId(id);
         if (task != null) {
             tareaRepository.delete(task);

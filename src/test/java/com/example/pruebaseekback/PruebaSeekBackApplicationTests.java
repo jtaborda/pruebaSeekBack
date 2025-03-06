@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,7 +39,7 @@ class PruebaSeekBackApplicationTests {
 
     @Test
     public void testCrearTarea() {
-        tareas tareas = new tareas("","","","");
+        tareas tareas = new tareas(null,"","","");
         tareas.setTitulo("Probando la tareaa");
         tareas.setDescripcion("Describiendo prueba de tarea");
         tareas.setEstado("activo");
@@ -53,7 +54,7 @@ class PruebaSeekBackApplicationTests {
     @Test
     public void tareaIdNoEncontrada() {
         // Cuando no existe una tarea con ese ID, lanzamos la excepción
-        String idTarea = "100";
+        Long idTarea = 100L;
         Mockito.when(tareaRepository.findById(idTarea)).thenReturn(java.util.Optional.empty());
 
         noEncuentraExcepcion exception = assertThrows(noEncuentraExcepcion.class, () -> {
@@ -65,12 +66,12 @@ class PruebaSeekBackApplicationTests {
 
     @Test
     public void actualizarTarea() {
-        String idTarea = "1";
-        tareas tareaExistente = new tareas("1","Tarea 1", "Descripción tarea 1", "activa");
+        Long idTarea=1L;
+        tareas tareaExistente = new tareas(null,"Tarea 1", "Descripción tarea 1", "activa");
 
         Mockito.when(tareaRepository.findById(idTarea)).thenReturn(Optional.of(tareaExistente));
 
-        tareas nuevaTarea = new tareas("1","Tarea actualizada", "Descripción actualizada", "pendiente");
+        tareas nuevaTarea = new tareas(null,"Tarea actualizada", "Descripción actualizada", "pendiente");
 
         Mockito.when(tareaRepository.save(Mockito.any(tareas.class))).thenReturn(nuevaTarea);
 
@@ -84,8 +85,8 @@ class PruebaSeekBackApplicationTests {
 
     @Test
     public void eliminarTarea() {
-        String idTarea = "2";
-        tareas tareaExistente = new tareas("1","Tarea a eliminar", "Descripción tarea", "En progreso");
+        Long idTarea = 2L;
+        tareas tareaExistente = new tareas(null,"Tarea a eliminar", "Descripción tarea", "En progreso");
 
         Mockito.when(tareaRepository.findById(idTarea)).thenReturn(Optional.of(tareaExistente));
         tareaService.deleteTarea(idTarea);

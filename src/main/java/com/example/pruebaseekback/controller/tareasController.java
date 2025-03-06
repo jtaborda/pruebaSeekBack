@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.pruebaseekback.service.tareaService;
 import java.util.List;
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/tareas")
 public class tareasController {
 
@@ -24,7 +25,7 @@ public class tareasController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<tareas> updateEstado(@PathVariable String id, @RequestBody tareas tareas) {
+    public ResponseEntity<tareas> updateEstado(@PathVariable Long id, @RequestBody tareas tareas) {
         tareas updatedTask = tareaService.updateTarea(id, tareas);
         if (updatedTask != null) {
             return new ResponseEntity<>(updatedTask, HttpStatus.OK);
@@ -33,7 +34,7 @@ public class tareasController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTarea(@PathVariable String id) {
+    public ResponseEntity<Void> deleteTarea(@PathVariable Long id) {
         if (tareaService.deleteTarea(id)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);//204
         }
