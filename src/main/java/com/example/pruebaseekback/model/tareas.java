@@ -19,6 +19,12 @@ public class tareas {
     private String descripcion;
     private String estado; // 'pendiente', 'activo', 'completado'
 
+    public tareas( String titulo, String descripcion, String estado) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.estado = estado;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
