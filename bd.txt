@@ -1,0 +1,21 @@
+-- Creamos la tabla 
+CREATE TABLE tareas (
+    id VARCHAR2(50) PRIMARY KEY,         -- ID único para cada tarea
+    titulo VARCHAR2(100) NOT NULL,        -- Título de la tarea
+    descripcion VARCHAR2(255),           -- Descripción de la tarea
+    estado VARCHAR2(20) CHECK (
+        estado IN ('pendiente', 'activo', 'completada')  -- Restricción de valores válidos
+    ) ,        -- Estado por defecto 'pendiente'
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  -- Fecha de creación
+    fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP   -- Fecha de última actualización
+);
+
+
+CREATE INDEX idx_status ON tareas(estado);
+
+
+-- Insertamos algunas tareas de ejemplo
+INSERT INTO tareas (id, titulo, descripcion, estado) VALUES ('1', 'Tarea 1', 'Ddescripción de la tarea 1', 'pendiente');
+INSERT INTO tareas (id, titulo, descripcion, estado) VALUES ('2', 'Tarea 2', 'Descripción de la tarea 2', 'activo');
+INSERT INTO tareas (id, titulo, descripcion, estado) VALUES ('3', 'Tarea 3', 'Descripción de la tarea 3', 'completada');
+commit;
