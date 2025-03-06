@@ -6,15 +6,21 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.example.pruebaseekback.repository.tareaRepository;
 import com.example.pruebaseekback.service.tareaService;
 import com.example.pruebaseekback.excepciones.noEncuentraExcepcion;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -32,7 +38,7 @@ class PruebaSeekBackApplicationTests {
 
     @Test
     public void testCrearTarea() {
-        tareas tareas = new tareas("","","");
+        tareas tareas = new tareas("","","","");
         tareas.setTitulo("Probando la tareaa");
         tareas.setDescripcion("Describiendo prueba de tarea");
         tareas.setEstado("activo");
@@ -60,11 +66,11 @@ class PruebaSeekBackApplicationTests {
     @Test
     public void actualizarTarea() {
         String idTarea = "1";
-        tareas tareaExistente = new tareas("Tarea 1", "Descripción tarea 1", "activa");
+        tareas tareaExistente = new tareas("1","Tarea 1", "Descripción tarea 1", "activa");
 
         Mockito.when(tareaRepository.findById(idTarea)).thenReturn(Optional.of(tareaExistente));
 
-        tareas nuevaTarea = new tareas("Tarea actualizada", "Descripción actualizada", "pendiente");
+        tareas nuevaTarea = new tareas("1","Tarea actualizada", "Descripción actualizada", "pendiente");
 
         Mockito.when(tareaRepository.save(Mockito.any(tareas.class))).thenReturn(nuevaTarea);
 
@@ -79,7 +85,7 @@ class PruebaSeekBackApplicationTests {
     @Test
     public void eliminarTarea() {
         String idTarea = "2";
-        tareas tareaExistente = new tareas("Tarea a eliminar", "Descripción tarea", "En progreso");
+        tareas tareaExistente = new tareas("1","Tarea a eliminar", "Descripción tarea", "En progreso");
 
         Mockito.when(tareaRepository.findById(idTarea)).thenReturn(Optional.of(tareaExistente));
         tareaService.deleteTarea(idTarea);
